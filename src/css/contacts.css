@@ -1,0 +1,111 @@
+/* Général */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #e9eff6;
+    color: #333;
+    background: #f0f0f0 url('../images/imh.webp') no-repeat center center !important;
+}
+
+/* En-tête */
+header {
+    background-color: #075E54;
+    color: white;
+    padding: 20px;
+    text-align: center;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+header a {
+    color: #fff;
+    text-decoration: none;
+    font-weight: bold;
+    margin-left: 10px;
+}
+
+header a:hover {
+    text-decoration: underline;
+}
+
+/* Contenu principal */
+main {
+    padding: 20px;
+    max-width: 800px;
+    margin: 20px auto;
+}
+
+/* Section contacts */
+.contacts {
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+}
+
+.search-bar {
+    padding: 15px;
+    background-color: #f8f9fa;
+    border-bottom: 1px solid #ddd;
+}
+
+.search-bar input {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 16px;
+}
+
+.contact-list {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
+
+.contact-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 15px;
+    border-bottom: 1px solid #f0f2f5;
+    transition: background-color 0.2s ease-in-out;
+}
+
+.contact-item:hover {
+    background-color: #f7f9fc;
+}
+
+.contact-info {
+    flex-grow: 1;
+}
+
+.contact-name {
+    font-weight: bold;
+    margin-bottom: 5px;
+    color: #075E54;
+}
+
+.contact-name a {
+    color: #128C7E;
+    text-decoration: none;
+    margin-left: 5px;
+}
+
+.contact-name a:hover {
+    text-decoration: underline;
+}
+
+.last-message a {
+    color: #007BFF;
+    text-decoration: none;
+}
+
+.last-message a:hover {
+    text-decoration: underline;
+}
+
+.timestamp {
+    font-size: 0.85em;
+    color: gray;
+}
