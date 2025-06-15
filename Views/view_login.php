@@ -1,41 +1,3 @@
-<?php
-session_start();
-require_once 'connexion.php';
-
-if (isset($_POST['submit_login'])) {
-    // Récupération des données du formulaire
-    $email = $_POST['email'];
-    $password = $_POST['password'];
-
-    // Récupérer le hachage stocké pour cet email
-    $requete = $bdd->prepare("SELECT user_id, prenom, password FROM users WHERE email = ?");
-    $requete->execute([$email]);
-    $user = $requete->fetch(PDO::FETCH_ASSOC);
-
-    // Vérifier si l'utilisateur existe
-    if ($user) {
-        // Vérifier le mot de passe avec password_verify()
-        if (password_verify($password, $user['password'])) {
-            // Mot de passe correct : démarrer une session
-            $_SESSION['email'] = $email;
-            $_SESSION['id'] = $user['user_id'];
-            $_SESSION['prenom'] = $user['prenom'];
-
-            // Redirection vers la page de chat
-            header("Location: chat.php");
-            exit();
-        } else {
-            // Mot de passe incorrect
-            $message = "Mauvais identifiant ou mot de passe";
-            echo $message;
-        }
-    } else {
-        // Utilisateur non trouvé
-        $message = "Mauvais identifiant ou mot de passe";
-        echo $message;
-    }
-}
-?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -44,13 +6,13 @@ if (isset($_POST['submit_login'])) {
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<!--===============================================================================================-->
-	<link rel="icon" type="image/png" href="images/icons/favicon.ico" />
+	<link rel="icon" type="image/png" href="src/images/icons/favicon.ico" />
 	<!--===============================================================================================-->
 	<link rel="stylesheet" type="text/css" href="vendor/bootstrap/css/bootstrap.min.css">
 	<!--===============================================================================================-->
-	<link rel="stylesheet" type="text/css" href="fonts/font-awesome-4.7.0/css/font-awesome.min.css">
+	<link rel="stylesheet" type="text/css" href="src/fonts/font-awesome-4.7.0/css/font-awesome.min.css">
 	<!--===============================================================================================-->
-	<link rel="stylesheet" type="text/css" href="fonts/iconic/css/material-design-iconic-font.min.css">
+	<link rel="stylesheet" type="text/css" href="src/fonts/iconic/css/material-design-iconic-font.min.css">
 	<!--===============================================================================================-->
 	<link rel="stylesheet" type="text/css" href="vendor/animate/animate.css">
 	<!--===============================================================================================-->
@@ -62,24 +24,24 @@ if (isset($_POST['submit_login'])) {
 	<!--===============================================================================================-->
 	<link rel="stylesheet" type="text/css" href="vendor/daterangepicker/daterangepicker.css">
 	<!--===============================================================================================-->
-	<link rel="stylesheet" type="text/css" href="css/util.css">
-	<link rel="stylesheet" type="text/css" href="css/main.css">
+	<link rel="stylesheet" type="text/css" href="src/css/util.css">
+	<link rel="stylesheet" type="text/css" href="src/css/main.css">
 	<!--===============================================================================================-->
 </head>
 
 <body>
-
+	<?php echo isset($message) ? $message : ''; ?>
 	<div class="limiter">
-		<div class="container-login100" style="background-image: url('images/bg-01.jpg');">
+		<div class="container-login100" style="background-image: url('src/images/bg-01.jpg');">
 			<div class="wrap-login100 p-l-55 p-r-55 p-t-65 p-b-54">
 				<form class="login100-form validate-form" method="POST">
 					<span class="login100-form-title p-b-49">
 						Connexion
 					</span>
 
-					<div class="wrap-input100 validate-input m-b-23" data-validate="Email is reauired">
+					<div class="wrap-input100 validate-input m-b-23" data-validate="Email is required">
 						<span class="label-input100">Email</span>
-						<input class="input100" type="mail" name="email" placeholder="Entrez votre adresse e-mail">
+						<input class="input100" type="mail" name="mail" placeholder="Entrez votre adresse e-mail">
 						<span class="focus-input100" data-symbol="&#xf206;"></span>
 					</div>
 
@@ -106,25 +68,9 @@ if (isset($_POST['submit_login'])) {
 
 					<div class="txt1 text-center p-t-54 p-b-20">
 						<span color="black">
-							Vous n'avez pas encore de compte ? <a href="register.php">Inscrivez-vous ici pour commencer ! </a>
+							Vous n'avez pas encore de compte ? <a href="?controller=home&action=register">Inscrivez-vous ici pour commencer ! </a>
 						</span>
 					</div>
-
-					<div class="flex-c-m">
-						<a href="#" class="login100-social-item bg1">
-							<i class="fa fa-facebook"></i>
-						</a>
-
-						<a href="#" class="login100-social-item bg2">
-							<i class="fa fa-twitter"></i>
-						</a>
-
-						<a href="#" class="login100-social-item bg3">
-							<i class="fa fa-google"></i>
-						</a>
-					</div>
-
-
 				</form>
 			</div>
 		</div>
@@ -148,7 +94,7 @@ if (isset($_POST['submit_login'])) {
 	<!--===============================================================================================-->
 	<script src="vendor/countdowntime/countdowntime.js"></script>
 	<!--===============================================================================================-->
-	<script src="js/main.js"></script>
+	<script src="src/js/main.js"></script>
 
 </body>
 

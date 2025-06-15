@@ -1,77 +1,47 @@
-<!DOCTYPE html>
-<html lang="en">
+<?php
+session_start(); // Démarrage de la session
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Annotator Quest</title>
-    <style>
-        body {
-            margin: 0;
-            font-family: Arial, sans-serif;
-            background: url('bg-01.jpg') no-repeat center center fixed;
-            background-size: cover;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            color: #fff;
-            text-align: center;
-        }
+// Inclusion du modèle
+require_once "Models/Model.php";
 
-        .container {
-            background: rgba(0, 0, 0, 0.6);
-            padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
-        }
+// Inclusion du modèle
 
-        .logo {
-            width: 300px;
-            height: 200px;
-            margin-bottom: 30px;
-        }
+require_once "Controllers/Controller.php";
 
-        h1 {
-            font-size: 3em;
-            margin: 20px 0 120px;
-            font-family: 'Roboto', sans-serif;
-        }
 
-        .buttons {
-            display: flex;
-            gap: 20px;
-            justify-content: center;
-        }
+// Liste des contrôleurs
+$controllers = ["home", "chat"];
 
-        .buttons a {
-            text-decoration: none;
-            color: #fff;
-            background: #007bff;
-            padding: 10px 20px;
-            border-radius: 5px;
-            font-size: 1em;
-            transition: background 0.3s;
-        }
+// Nom du contrôleur par défaut
+$controller_default = "home";
 
-        .buttons a:hover {
-            background: #0056b3;
-        }
-    </style>
-</head>
+// Vérification si le paramètre "controller" existe dans l'URL et correspond à un contrôleur de la liste
+if (isset($_GET['controller']) && in_array($_GET['controller'], $controllers)) {
+    $controller_name = $_GET['controller'];
+} else {
+    $controller_name = $controller_default; // Si non spécifié, on utilise le contrôleur par défaut
+}
 
-<body>
-<div class="container">
-    <img src="logo.png" alt="Annotator Quest Logo" class="logo">
-    <h1>Bienvenue sur Annotator Quest</h1>
-    <p>💬 Connectez-vous et commencez à chatter avec style ! Que vous soyez ici pour échanger des idées, partager un secret ou juste dire "Salut !", vous êtes au bon endroit. 🚀</p>
-    <p>👋 Nouveau ? Inscrivez-vous pour rejoindre la conversation. Déjà inscrit ? Connectez-vous et reprenez là où vous vous êtes arrêtés !</p>
-    <div class="buttons">
-    <a href="src/register.php"> Inscription</a>
-        <a href="src/login.php"> Connexion</a>
-    </div>
-</div>
+// Détermination du nom de la classe du contrôleur
+$class_name = 'Controller_' . $controller_name;
 
-</body>
+// Détermination du chemin du fichier contenant la définition du contrôleur
+$file_name = 'Controllers/' . $class_name . '.php';
 
-</html>
+// Si le fichier du contrôleur existe et est lisible
+if (is_readable($file_name)) {
+    require_once $file_name;
+    
+    // Vérification si la classe du contrôleur existe avant de l'instancier
+    if (class_exists($class_name)) {
+        $controller = new $class_name();
+    } else {
+        // Gestion de l'erreur si la classe n'est pas définie
+        header("HTTP/1.0 500 Internal Server Error");
+        die("Erreur : La classe '$class_name' n'existe pas dans le fichier '$file_name'.");
+    }
+} else {
+    // Gestion de l'erreur si le fichier du contrôleur est introuvable
+    header("HTTP/1.0 404 Not Found");
+    die("Erreur 404 : Le fichier du contrôleur '$file_name' est introuvable.");
+}

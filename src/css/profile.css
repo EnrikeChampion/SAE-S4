@@ -1,0 +1,139 @@
+body {
+    font-family: 'Roboto', sans-serif;
+    background-color: #f8f9fa;
+    margin: 0;
+    padding: 0;
+}
+
+.page-content {
+    padding: 20px;
+}
+
+.card {
+    border: none;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+}
+
+.bg-c-lite-green {
+    background: linear-gradient(135deg, #128C7E, #25D366);
+}
+
+.user-profile {
+    padding: 20px;
+    text-align: center;
+    color: white;
+}
+
+.user-profile img {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    border: 3px solid white;
+}
+
+.user-profile h6 {
+    margin-top: 10px;
+    font-size: 1.2rem;
+    font-weight: 600;
+}
+
+.card-block {
+    padding: 20px;
+}
+
+.card-block .row {
+    margin-bottom: 15px;
+}
+
+.card-block p {
+    margin: 0;
+    font-weight: 600;
+    color: #333;
+}
+
+.card-block h6 {
+    margin: 0;
+    font-size: 1rem;
+    color: #666;
+}
+
+.social-link {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    margin-top: 20px;
+}
+
+.social-link a {
+    color: #128C7E;
+    font-size: 1.5rem;
+    transition: color 0.3s ease;
+}
+
+.social-link a:hover {
+    color: #25D366;
+}
+
+/* From Uiverse.io by satyamchaudharydev */ 
+button {
+    --primary-color:rgb(147, 147, 158);
+    --secondary-color: #fff;
+    --hover-color: #111;
+    --arrow-width: 10px;
+    --arrow-stroke: 2px;
+    box-sizing: border-box;
+    border: 0;
+    border-radius: 20px;
+    color: var(--secondary-color);
+    padding: 1em 1.8em;
+    background: var(--primary-color);
+    display: flex;
+    transition: 0.2s background;
+    align-items: center;
+    gap: 0.6em;
+    font-weight: bold;
+}
+  
+button .arrow-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+  
+button .arrow {
+    margin-top: 1px;
+    width: var(--arrow-width);
+    background: var(--primary-color);
+    height: var(--arrow-stroke);
+    position: relative;
+    transition: 0.2s;
+}
+  
+button .arrow::before {
+    content: "";
+    box-sizing: border-box;
+    position: absolute;
+    border: solid var(--secondary-color);
+    border-width: 0 var(--arrow-stroke) var(--arrow-stroke) 0;
+    display: inline-block;
+    top: -3px;
+    right: 3px;
+    transition: 0.2s;
+    padding: 3px;
+    transform: rotate(126deg);
+}
+  
+button:hover {
+    background-color: var(--hover-color);
+}
+  
+button:hover .arrow {
+    background: var(--secondary-color);
+}
+  
+button:hover .arrow:before {
+    left: 0;
+}
+#retour{ text-decoration: none;}
