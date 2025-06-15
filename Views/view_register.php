@@ -36,14 +36,10 @@
 					<span class="login100-form-title p-b-49">
 						Inscription
 					</span>
-                    <div class="wrap-input100 validate-input m-b-23" data-validate = "Username is required">
-						<span class="label-input100">Prénom</span>
-						<input class="input100" type="text" name="first_name" placeholder="Entrez votre prénom">
-						<span class="focus-input100" data-symbol="&#xf206;"></span>
-					</div>
-                    <div class="wrap-input100 validate-input m-b-23" data-validate = "Username is required">
-						<span class="label-input100">Nom</span>
-						<input class="input100" type="text" name="last_name" placeholder="Entrez votre nom">
+
+					<div class="wrap-input100 validate-input m-b-23" data-validate = "Username is required">
+						<span class="label-input100">Nom d'utilisateur</span>
+						<input class="input100" type="text" name="username" placeholder="Entrez votre nom d'utilisateur">
 						<span class="focus-input100" data-symbol="&#xf206;"></span>
 					</div>
 					<div class="wrap-input100 validate-input m-b-23" data-validate = "Username is required">

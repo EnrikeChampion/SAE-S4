@@ -33,11 +33,7 @@
                                 <div class="row">
                                     <div class="col-sm-6">
                                         <p class="m-b-10 f-w-600">Prénom</p>
-                                        <h6 class="text-muted f-w-400"><?=$first_name?></h6>
-                                    </div>
-                                    <div class="col-sm-6">
-                                        <p class="m-b-10 f-w-600">Nom</p>
-                                        <h6 class="text-muted f-w-400"><?=$last_name?></h6>
+                                        <h6 class="text-muted f-w-400"><?=$username?></h6>
                                     </div>
                                 </div>
                                 <div class="row">

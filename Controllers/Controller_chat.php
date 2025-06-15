@@ -18,6 +18,13 @@ class Controller_chat extends Controller {
     }
 
     public function action_logout() {
+
+    if (isset($_SESSION['id'])) {
+        // Mettre à jour le statut de l'utilisateur à OFFLINE dans la base
+        $m = Model::getModel();
+        $m->logout_user($_SESSION['id']);
+    }
+
         // Réinitialiser les variables de session
         $_SESSION = [];
         session_unset();

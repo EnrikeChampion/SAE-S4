@@ -22,11 +22,10 @@ class Model
 
     public function create_new_account(){
         // Récupération et validation des données du formulaire
-            $firstname = $_POST['first_name'];
-            $lastname = $_POST['last_name'];
+            $username = $_POST['username'];
             $mail = $_POST['mail'];
             $password = $_POST['password'];
-            $hash = password_hash($password, PASSWORD_BCRYPT); // Utilisation de sha1 pour le hashage du mot de passe
+            $hash = password_hash($password, PASSWORD_BCRYPT); // Utilisation de bcrypt pour le hashage du mot de passe
 
             // Vérification si tous les champs obligatoires sont remplis
             if (empty($mail) || empty($password)) {
@@ -44,50 +43,64 @@ class Model
                 }
             }
             // Insertion du nouvel utilisateur
-            $request = $this->db->prepare("INSERT INTO users (prenom, nom,  email, password) VALUES (?, ?, ?, ?)");
-            $request->execute([$firstname, $lastname, $mail, $hash]);
+            $request = $this->db->prepare("INSERT INTO users (username, email, password_hash, created_at, last_online, is_online) VALUES (?, ?, ?, NOW(), NOW(), ?)");
+            $request->execute([$username, $mail, $hash, true]);
     }
 
-    public function login_user(){
-        // Récupération des données du formulaire
-        $mail = $_POST['mail'];
-        $password = $_POST['password'];
+public function login_user(){
+    // Récupération des données du formulaire
+    $mail = $_POST['mail'];
+    $password = $_POST['password'];
 
-        // Récupérer le hachage stocké pour cet email
-        $tmp = $this->db->prepare("SELECT user_id, prenom, password FROM users WHERE email = ?");
-        $tmp->execute([$mail]);
-        $user = $tmp->fetch(PDO::FETCH_ASSOC);
+    // Récupérer le hachage stocké pour cet email
+    $tmp = $this->db->prepare("SELECT user_id, username, password_hash FROM users WHERE email = ?");
+    $tmp->execute([$mail]);
+    $user = $tmp->fetch(PDO::FETCH_ASSOC);
 
-        // Vérifier si l'utilisateur existe
-        if ($user) {
-            // Vérifier le mot de passe avec password_verify()
-            if (password_verify($password, $user['password'])) {
-                // Mot de passe correct : démarrer une session
-                $_SESSION['mail'] = $mail;
-                $_SESSION['id'] = $user['user_id'];
-                $_SESSION['first_name'] = $user['prenom'];
-            } else {
-                // Mot de passe incorrect
-                $data = ["message" => "Mauvais identifiant ou mot de passe"];
-                return $data;
-            }
+    // Vérifier si l'utilisateur existe
+    if ($user) {
+        // Vérifier le mot de passe avec password_verify()
+        if (password_verify($password, $user['password_hash'])) {
+            // Mot de passe correct : démarrer une session
+            $_SESSION['mail'] = $mail;
+            $_SESSION['id'] = $user['user_id'];
+            $_SESSION['username'] = $user['username'];
+
+            // Mettre à jour le statut en ligne dans la base (optionnel)
+            $update = $this->db->prepare("UPDATE users SET is_online = TRUE, last_online = NOW() WHERE user_id = ?");
+            $update->execute([$user['user_id']]);
+
+            // Retourner les infos utiles si besoin
+            return [
+                'user_id' => $user['user_id'],
+                'username' => $user['username'],
+                'mail' => $mail
+            ];
         } else {
-            // Utilisateur non trouvé
-            $data = ["message" => "Mauvais identifiant ou mot de passe"];
-            return $data;
+            return ["message" => "Mauvais identifiant ou mot de passe"];
         }
+    } else {
+        return ["message" => "Mauvais identifiant ou mot de passe"];
     }
+}
+
+    public function logout_user($user_id) {
+        // Préparation de la requête pour mettre à jour le statut de connexion
+        $request = $this->db->prepare("UPDATE users SET is_online = FALSE, last_online = NOW() WHERE user_id = ?");
+        $request->execute([$user_id]);
+    }
+
 
     public function get_contacts()
     {
-        $tmp = "SELECT user_id,prenom, email FROM users";
+        $tmp = "SELECT user_id,username, email FROM users";
         $request = $this->db->query($tmp);
 
         // Récupérer tous les résultats sous forme de tableau associatif
         $users = $request->fetchAll(PDO::FETCH_ASSOC);
         $contacts = '';
         foreach ($users as $user) {
-            $contacts .= '<li class="contact-item"><div class="contact-info"><div class="contact-name">' . htmlspecialchars($user['prenom'])
+            $contacts .= '<li class="contact-item"><div class="contact-info"><div class="contact-name">' . htmlspecialchars($user['username'])
                         . '<a href="?controller=chat&action=profile&user_id=' . strval($user['user_id'])
                         . '"> Voir son profil </a></div><div class="last-message"><a href="?controller=chat&action=chat&uid=' . strval($_SESSION['id'])
                         . '&id=' . strval($user['user_id']) . '" id="message"> Cliquer ici pour continuer la discussion...</a></div></div></li>';
@@ -100,7 +113,7 @@ class Model
     {
         if (isset($_GET['user_id'])) {
             $userId = intval($_GET['user_id']);
-            $tmp = "SELECT user_id, prenom, nom, email FROM users WHERE user_id = ?";
+            $tmp = "SELECT user_id, username, email FROM users WHERE user_id = ?";
             $request = $this->db->prepare($tmp);
             $request->execute([$userId]);
 
@@ -114,8 +127,7 @@ class Model
             }
             // Retourner les données de l'utilisateur
             $data = [
-                "first_name" => htmlspecialchars($user['prenom']),
-                "last_name" => htmlspecialchars($user['nom']),
+                "username" => htmlspecialchars($user['username']),
                 "mail" => htmlspecialchars($user['email'])
             ];
             return $data;
