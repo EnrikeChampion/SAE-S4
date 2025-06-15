@@ -13,9 +13,10 @@
     <header>
         <h1>Messagerie Instantanée</h1>
         <p>Bienvenue,  <?php echo htmlspecialchars($_SESSION['username']); ?> 😍 !</p>
-        <a href="?controller=chat&action=logout">Déconnexion</a> <!-- Lien pour se déconnecter -->
+        <a href="?controller=chat&action=logout" id="logout">Déconnexion</a> <!-- Lien pour se déconnecter -->
     </header>
     <main>
+        <script src="src\js\contacts.js"></script>
         <div class="contacts">
             
             <div class="search-bar">
