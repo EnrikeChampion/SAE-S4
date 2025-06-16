@@ -12,9 +12,9 @@
         <div id="input-area">
             <textarea id="message-input" placeholder="Écrivez votre message..."></textarea>
             <div id="emotion-buttons">
-                <button data-emotion="joie">Joie</button>
-                <button data-emotion="colère">Colère</button>
-                <button data-emotion="tristesse">Tristesse</button>
+                <button data-emotion="joie">😀</button>
+                <button data-emotion="colère">😡</button>
+                <button data-emotion="tristesse">😢</button>
             </div>
             <button id="send-button">Envoyer</button>
         </div>
