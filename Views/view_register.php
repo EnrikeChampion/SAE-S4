@@ -59,7 +59,12 @@
                     <div class="text-right p-t-8 p-b-31">
 						
 					</div>
-					
+					<div class="form-group">
+    <label>
+        <input type="checkbox" name="accept_conditions" required>
+        J'accepte les <a href="?controller=chat&action=conditions" target="_blank">conditions d'utilisation</a>
+    </label>
+</div>
 					
 					
 					<div class="container-login100-form-btn">
