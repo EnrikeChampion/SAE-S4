@@ -9,8 +9,8 @@
 </head>
 
 <body>
-<div class="container">
     <img src="src/images/logo.png" alt="Annotator Quest Logo" class="logo">
+<div class="container">
     <h1>Bienvenue sur Annotator Quest</h1>
     <p>💬 Connectez-vous et commencez à chatter avec style ! Que vous soyez ici pour échanger des idées, partager un secret ou juste dire "Salut !", vous êtes au bon endroit. 🚀</p>
     <p>👋 Nouveau ? Inscrivez-vous pour rejoindre la conversation. Déjà inscrit ? Connectez-vous et reprenez là où vous vous êtes arrêtés !</p>
