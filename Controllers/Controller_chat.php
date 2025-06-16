@@ -51,5 +51,8 @@ class Controller_chat extends Controller {
     public function action_chat() {
         $this->render("chat", []);
     }
+    public function action_conditions() {
+        $this->render("conditions", []);
+    }
 }
 ?>
