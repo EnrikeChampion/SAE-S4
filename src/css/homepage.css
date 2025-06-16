@@ -1,6 +1,29 @@
+
+@font-face {
+  font-family: Poppins-Regular;
+  src: url('../fonts/poppins/Poppins-Regular.ttf'); 
+}
+
+@font-face {
+  font-family: Poppins-Medium;
+  src: url('../fonts/poppins/Poppins-Medium.ttf'); 
+}
+
+@font-face {
+  font-family: Poppins-Bold;
+  src: url('../fonts/poppins/Poppins-Bold.ttf'); 
+}
+
+@font-face {
+  font-family: Poppins-SemiBold;
+  src: url('../fonts/poppins/Poppins-SemiBold.ttf'); 
+}
+
+
+
 body {
     margin: 0;
-    font-family: Arial, sans-serif;
+    font-family: Poppins-Regular;
     background: url('../images/bg-01.jpg') no-repeat center center fixed;
     background-size: cover;
     display: flex;
@@ -19,15 +42,19 @@ body {
 }
 
 .logo {
-    width: 300px;
-    height: 200px;
-    margin-bottom: 30px;
+   position: absolute;
+    top: 10px;
+    left: 10px;
+    width: 200px;   /* ou 100px selon la taille souhaitée */
+    height: auto;
+    z-index: 10;
+    
 }
 
 h1 {
     font-size: 3em;
     margin: 20px 0 120px;
-    font-family: 'Roboto', sans-serif;
+    font-family: Poppins-Regular;
 }
 
 .buttons {
