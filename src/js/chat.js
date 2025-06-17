@@ -7,8 +7,7 @@ let selectedEmotion = null;
 // Vérifier si la page a reçu l'ID du destinataire via POST
 
 // Récupérer l'ID du destinataire depuis une variable POST (présumée envoyée du backend)
-const recipientId = $_POST['id'];
-const uid = $_POST['uid'];
+
 
 // Afficher l'ID du destinataire sur la page 
 if (recipientId) {

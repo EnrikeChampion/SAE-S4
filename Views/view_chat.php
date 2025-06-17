@@ -19,7 +19,12 @@
             <button id="send-button">Envoyer</button>
         </div>
     </div>
-    <script src="src/js/chat.js"></script>
+    <script>
+        const recipientId = <?php echo $_GET['id'];?>;
+        const uid = <?php echo $_GET['uid'];?>;
+    </script>
+    <script src="src/js/chat.js">
+    </script>
 </body>
 
 </html>
