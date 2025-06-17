@@ -57,10 +57,9 @@
 						</a>
 					</div>
 					 <div class="form-group">
-    <div class="consent">
-    <input type="checkbox" id="consent-checkbox"required>
-    <label for="consent-checkbox">
-        J'ai lu et j'accepte les <a href="Views/view_conditions.php" target="_blank">conditions d'utilisation</a>.
+    <label>
+        <input type="checkbox" name="accept_conditions" required>
+        J'accepte les <a href="?controller=chat&action=conditions" target="_blank">conditions d'utilisation</a>
     </label>
     </div>
 </div>

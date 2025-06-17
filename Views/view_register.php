@@ -69,15 +69,16 @@
                     <div class="text-right p-t-8 p-b-31">
 						
 					</div>
-    					<div class="form-group">
-    <div class="consent">
-    <input type="checkbox" id="consent-checkbox"required>
-    <label for="consent-checkbox">
-        J'ai lu et j'accepte les <a href="Views/view_conditions.php" target="_blank">conditions d'utilisation</a>.
-    </label>
-    </div>
-</div>
+					<div class="form-group">
+					<div class="consent">
+   						 <input type="checkbox" id="consent-checkbox" required>
+    						<label for="consent-checkbox">
+       							 J'ai lu et j'accepte les <a href="?controller=chat&action=conditions" target="_blank">conditions d'utilisation</a>.
+
+    
+							</div>
 					
+					</div>
 					<div class="container-login100-form-btn">
 						<div class="wrap-login100-form-btn">
 							<div class="login100-form-bgbtn"></div>
