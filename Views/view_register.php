@@ -2,6 +2,14 @@
 <html lang="en">
 <head>
 	<title>Register</title>
+	<style>
+        #Exist {
+            color: #ff0000;
+            opacity: 0;
+            font-weight: bold;
+            margin-bottom: 20px;
+        }
+    </style>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 <!--===============================================================================================-->	
@@ -36,7 +44,9 @@
 					<span class="login100-form-title p-b-49">
 						Inscription
 					</span>
-
+					<p id="Exist" class="error-message">
+    					Ce nom d'utilisateur existe déjà
+					</p>
 					<div class="wrap-input100 validate-input m-b-23" data-validate = "Username is required">
 						<span class="label-input100">Nom d'utilisateur</span>
 						<input class="input100" type="text" name="username" placeholder="Entrez votre nom d'utilisateur">
@@ -59,8 +69,14 @@
                     <div class="text-right p-t-8 p-b-31">
 						
 					</div>
-					
-					
+    					<div class="form-group">
+    <div class="consent">
+    <input type="checkbox" id="consent-checkbox"required>
+    <label for="consent-checkbox">
+        J'ai lu et j'accepte les <a href="Views/view_conditions.php" target="_blank">conditions d'utilisation</a>.
+    </label>
+    </div>
+</div>
 					
 					<div class="container-login100-form-btn">
 						<div class="wrap-login100-form-btn">
@@ -100,6 +116,22 @@
 	<script src="vendor/countdowntime/countdowntime.js"></script>
 <!--===============================================================================================-->
 	<script src="js/main.js"></script>
+	<script>
+    const checkbox = document.getElementById('consent-checkbox');
+    const registerBtn = document.getElementById('register-btn');
+    const loginBtn = document.getElementById('login-btn');
+
+    checkbox.addEventListener('change', function () {
+        if (this.checked) {
+            registerBtn.classList.remove('btn-disabled');
+            loginBtn.classList.remove('btn-disabled');
+        } else {
+            registerBtn.classList.add('btn-disabled');
+            loginBtn.classList.add('btn-disabled');
+        }
+    });
+</script>
+	
 
 </body>
 </html>

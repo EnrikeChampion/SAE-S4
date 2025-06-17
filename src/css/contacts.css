@@ -1,20 +1,41 @@
 /* Général */
+@font-face {
+  font-family: Poppins-Regular;
+  src: url('../fonts/poppins/Poppins-Regular.ttf'); 
+}
+
+@font-face {
+  font-family: Poppins-Medium;
+  src: url('../fonts/poppins/Poppins-Medium.ttf'); 
+}
+
+@font-face {
+  font-family: Poppins-Bold;
+  src: url('../fonts/poppins/Poppins-Bold.ttf'); 
+}
+
+@font-face {
+  font-family: Poppins-SemiBold;
+  src: url('../fonts/poppins/Poppins-SemiBold.ttf'); 
+}
+
 body {
-    font-family: Arial, sans-serif;
+    font-family: Poppins-Regular;
     margin: 0;
     padding: 0;
     background-color: #e9eff6;
     color: #333;
-    background: #f0f0f0 url('../images/imh.webp') no-repeat center center !important;
-}
+    background: url('../images/bg-01.jpg') no-repeat center center fixed;
 
+}
 /* En-tête */
 header {
-    background-color: #075E54;
+    font-family: Poppins-Regular;
     color: white;
     padding: 20px;
     text-align: center;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    background-image: url('../images/bg-01.jpg') no-repeat center center fixed !important;
 }
 
 header a {
@@ -30,6 +51,7 @@ header a:hover {
 
 /* Contenu principal */
 main {
+    font-family: Poppins-Regular;
     padding: 20px;
     max-width: 800px;
     margin: 20px auto;

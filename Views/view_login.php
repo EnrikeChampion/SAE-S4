@@ -57,10 +57,12 @@
 						</a>
 					</div>
 					 <div class="form-group">
-    <label>
-        <input type="checkbox" name="accept_conditions" required>
-        J'accepte les <a href="view_conditions.php" target="_blank">conditions d'utilisation</a>
+    <div class="consent">
+    <input type="checkbox" id="consent-checkbox"required>
+    <label for="consent-checkbox">
+        J'ai lu et j'accepte les <a href="Views/view_conditions.php" target="_blank">conditions d'utilisation</a>.
     </label>
+    </div>
 </div>
 					<div class="container-login100-form-btn">
 						<div class="wrap-login100-form-btn">
@@ -100,6 +102,24 @@
 	<script src="vendor/countdowntime/countdowntime.js"></script>
 	<!--===============================================================================================-->
 	<script src="src/js/main.js"></script>
+
+	<script>
+    const checkbox = document.getElementById('consent-checkbox');
+    const registerBtn = document.getElementById('register-btn');
+    const loginBtn = document.getElementById('login-btn');
+
+    checkbox.addEventListener('change', function () {
+        if (this.checked) {
+            registerBtn.classList.remove('btn-disabled');
+            loginBtn.classList.remove('btn-disabled');
+        } else {
+            registerBtn.classList.add('btn-disabled');
+            loginBtn.classList.add('btn-disabled');
+        }
+    });
+</script>
+
+
 
 </body>
 

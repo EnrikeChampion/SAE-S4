@@ -76,3 +76,20 @@ h1 {
 .buttons a:hover {
     background: #0056b3;
 }
+
+.consent {
+    margin-top: 20px;
+    margin-bottom: 20px;
+    font-size: 0.95rem;
+}
+
+.consent a {
+    color: #007BFF;
+    text-decoration: underline;
+}
+
+.buttons a.btn-disabled {
+    pointer-events: none;
+    opacity: 0.5;
+    cursor: not-allowed;
+}
