@@ -5,7 +5,7 @@ require_once 'Controller.php';
 class Controller_chat extends Controller {
     public function action_default() {
         // Vérifier si l'utilisateur est connecté
-        if (!isset($_SESSION['mail']) || !isset($_SESSION['id'])) {
+        if (!isset($_SESSION['mail']) || !isset($_SESSION['user_id'])) {
             // Rediriger vers la page de connexion si l'utilisateur n'est pas connecté
             header("Location: ?controller=home&action=login");
         } else {
@@ -19,10 +19,10 @@ class Controller_chat extends Controller {
 
     public function action_logout() {
 
-    if (isset($_SESSION['id'])) {
+    if (isset($_SESSION['user_id'])) {
         // Mettre à jour le statut de l'utilisateur à OFFLINE dans la base
         $m = Model::getModel();
-        $m->logout_user($_SESSION['id']);
+        $m->logout_user($_SESSION['user_id']);
     }
 
         // Réinitialiser les variables de session

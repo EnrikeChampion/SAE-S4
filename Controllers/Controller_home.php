@@ -4,7 +4,7 @@ require_once 'Controller.php';
 
 class Controller_home extends Controller {
     public function action_default() {
-        if (isset($_SESSION['mail'] ) && isset($_SESSION['id'])) {
+        if (isset($_SESSION['mail'] ) && isset($_SESSION['user_id'])) {
             // Si l'utilisateur est déjà connecté, rediriger vers la page de chat
             header('Location: ?controller=chat');
         }
@@ -12,7 +12,7 @@ class Controller_home extends Controller {
     }
 
     public function action_register() {
-        if (isset($_SESSION['mail'] ) && isset($_SESSION['id'])) {
+        if (isset($_SESSION['mail'] ) && isset($_SESSION['user_id'])) {
             // Si l'utilisateur est déjà connecté, rediriger vers la page de chat
             header('Location: ?controller=chat');
         }
@@ -30,7 +30,7 @@ class Controller_home extends Controller {
     }
 
     public function action_login() {
-        if (isset($_SESSION['mail'] ) && isset($_SESSION['id'])) {
+        if (isset($_SESSION['mail'] ) && isset($_SESSION['user_id'])) {
             // Si l'utilisateur est déjà connecté, rediriger vers la page de chat
             header('Location: ?controller=chat');
         }
@@ -40,7 +40,7 @@ class Controller_home extends Controller {
             if (isset($data['message'])) {
                 $this->render("login", $data);
             } else {
-                header('Location: ?controller=account'); // Redirection vers la page de chat après une connexion réussie
+                header('Location: ?controller=chat'); // Redirection vers la page de chat après une connexion réussie
             }
         } else {
             $this->render("login", []);

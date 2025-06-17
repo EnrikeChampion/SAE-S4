@@ -63,7 +63,7 @@ public function login_user(){
         if (password_verify($password, $user['password_hash'])) {
             // Mot de passe correct : démarrer une session
             $_SESSION['mail'] = $mail;
-            $_SESSION['id'] = $user['user_id'];
+            $_SESSION['user_id'] = $user['user_id'];
             $_SESSION['username'] = $user['username'];
 
             // Mettre à jour le statut en ligne dans la base (optionnel)
@@ -102,7 +102,7 @@ public function login_user(){
         foreach ($users as $user) {
             $contacts .= '<li class="contact-item"><div class="contact-info"><div class="contact-name">' . htmlspecialchars($user['username'])
                         . '<a href="?controller=chat&action=profile&user_id=' . strval($user['user_id'])
-                        . '"> Voir son profil </a></div><div class="last-message"><a href="?controller=chat&action=chat&uid=' . strval($_SESSION['id'])
+                        . '"> Voir son profil </a></div><div class="last-message"><a href="?controller=chat&action=chat&uid=' . strval($_SESSION['user_id'])
                         . '&id=' . strval($user['user_id']) . '" id="message"> Cliquer ici pour continuer la discussion...</a></div></div></li>';
         }
         $data = ["contacts" => $contacts];
