@@ -21,8 +21,8 @@
     <div class="buttons">
    
 
-    <a href="?controller=account&action=register"> Inscription</a>
-        <a href="?controller=account&action=login"> Connexion</a>
+    <a href="?controller=home&action=register"> Inscription</a>
+        <a href="?controller=home&action=login"> Connexion</a>
     </div>
 </div>
 

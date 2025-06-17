@@ -56,13 +56,13 @@
 							Mot de passe oublié?
 						</a>
 					</div>
-					 <div class="form-group">
-    <label>
-        <input type="checkbox" name="accept_conditions" required>
-        J'accepte les <a href="?controller=chat&action=conditions" target="_blank">conditions d'utilisation</a>
-    </label>
-    </div>
-</div>
+					<div class="form-group">
+						<label>
+							<input type="checkbox" name="accept_conditions" required>
+							J'accepte les <a href="?controller=chat&action=conditions" target="_blank">conditions d'utilisation</a>
+						</label>
+					</div>
+
 					<div class="container-login100-form-btn">
 						<div class="wrap-login100-form-btn">
 							<div class="login100-form-bgbtn"></div>
