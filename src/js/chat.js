@@ -28,7 +28,14 @@ function displayMessage(message, sender, emotion) {
     const messageDiv = document.createElement('div');
     messageDiv.classList.add('message');
     messageDiv.classList.add(sender);
-    messageDiv.textContent = message + " (" + emotion + ")";
+
+    // Afficher l'émotion seulement pour l'expéditeur
+    if (sender === uid && emotion) {
+        messageDiv.textContent = message + " (" + emotion + ")";
+    } else {
+        messageDiv.textContent = message;
+    }
+
     messageArea.appendChild(messageDiv);
     messageArea.scrollTop = messageArea.scrollHeight;
 }
