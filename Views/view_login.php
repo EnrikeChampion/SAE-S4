@@ -61,7 +61,7 @@
 							<input type="checkbox" name="accept_conditions" required>
 							J'accepte les <a href="?controller=chat&action=conditions" target="_blank">conditions d'utilisation</a>
 						</label>
-					</div>
+					
 
 					<div class="container-login100-form-btn">
 						<div class="wrap-login100-form-btn">
@@ -71,7 +71,7 @@
 							</button>
 						</div>
 					</div>
-
+					</div>
 					<div class="txt1 text-center p-t-54 p-b-20">
 						<span color="black">
 							Vous n'avez pas encore de compte ? <a href="?controller=home&action=register">Inscrivez-vous ici pour commencer ! </a>
