@@ -1,24 +1,14 @@
 const messageArea = document.getElementById('message-area');
 const messageInput = document.getElementById('message-input');
 const sendButton = document.getElementById('send-button');
-const emotionButtons = document.getElementById('emotion-buttons').querySelectorAll('button');
-let selectedEmotion = null;
 
-// Vérifier si la page a reçu l'ID du destinataire via POST
-
-// Récupérer l'ID du destinataire depuis une variable POST (présumée envoyée du backend)
+// Récupérer l'ID du destinataire depuis une variable GET (présumée envoyée du backend)
 
 
 // Afficher l'ID du destinataire sur la page 
 if (recipientId) {
     initiateWebSocket(uid, recipientId); // Initier la connexion WebSocket avec l'ID du destinataire
 }
-
-emotionButtons.forEach(button => {
-    button.addEventListener('click', () => {
-        selectedEmotion = button.dataset.emotion;
-    });
-});
 
 sendButton.addEventListener('click', () => {
     sendMessage();
@@ -62,20 +52,21 @@ function initiateWebSocket(uid, recipientId) {
 function sendMessage(recipientId) {
     const message = document.getElementById("message-input").value; // Récupérer le message saisi
     // Si le message n'est pas vide
+    let selectedEmotion = document.querySelector('input[name="emotion"]:checked');;
     if (message.trim() !== "" && selectedEmotion != null) {
         const messageData = {
             dest: recipientId,
             message: message,
-            emotion: selectedEmotion
+            emotion: selectedEmotion.value
         };
         // Envoyer le message via la connexion WebSocket
         conn.send(JSON.stringify(messageData));
 
         // Afficher le message dans l'interface utilisateur
-        displayMessage(message, uid, selectedEmotion);
+        displayMessage(message, uid, selectedEmotion.value);
 
         // Optionnellement, vider le champ après l'envoi du message
         document.getElementById("message-input").value = '';
-        selectedEmotion = null;
+        selectedEmotion.checked = false; // Décocher l'émotion sélectionnée
     }
 }
