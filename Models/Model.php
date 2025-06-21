@@ -22,29 +22,41 @@ class Model
 
     public function create_new_account(){
         // Récupération et validation des données du formulaire
-            $username = $_POST['username'];
-            $mail = $_POST['mail'];
-            $password = $_POST['password'];
-            $hash = password_hash($password, PASSWORD_BCRYPT); // Utilisation de bcrypt pour le hashage du mot de passe
+        $username = $_POST['username'];
+        $mail = $_POST['mail'];
+        $password = $_POST['password'];
+        $hash = password_hash($password, PASSWORD_BCRYPT); // Utilisation de bcrypt pour le hashage du mot de passe
+   
+        // Vérification si tous les champs obligatoires sont remplis
+        if (empty($username) ||empty($mail) || empty($password)) {
+            $data = ["message" => "Veuillez remplir tous les champs obligatoires."];
+            return $data;
+        } 
+        // Vérification de la validité de l'email
+        if (!preg_match('/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/', $mail)) {
+            $data = ["message" => "L'adresse e-mail n'est pas valide."];
+            return $data;
+        }
+        // Vérification de la longueur du mot de passe et s'il contient au moins une lettre majuscule et un caractère spécial
+        if (!preg_match('/^(?=.*[A-Z])(?=.*[\W_]).{8,}$/', $password)) {
+            $data=["message" => "Le mot de passe doit contenir au moins 8 caractères, une majuscule et un caractère spécial."];
+            return $data;
+        }
+        else {
+            $tmp = $this->db->prepare("SELECT * FROM users WHERE email = ?");
+            $tmp->execute([$mail]);
+            $existing_user = $tmp->fetch();
 
-            // Vérification si tous les champs obligatoires sont remplis
-            if (empty($mail) || empty($password)) {
-                $data = ["message" => "Veuillez remplir tous les champs obligatoires."];
+            // Vérifier si un utilisateur avec cet email existe déjà
+            if ($existing_user) {
+                $data = ["message" => "Cet utilisateur existe déjà."];
                 return $data;
-            } else {
-                $tmp = $this->db->prepare("SELECT * FROM users WHERE email = ?");
-                $tmp->execute([$mail]);
-                $existing_user = $tmp->fetch();
-
-                // Vérifier si un utilisateur avec cet email existe déjà
-                if ($existing_user) {
-                    $data = ["message" => "Cet utilisateur existe déjà."];
-                    return $data;
-                }
             }
-            // Insertion du nouvel utilisateur
-            $request = $this->db->prepare("INSERT INTO users (username, email, password_hash, created_at, last_online, is_online) VALUES (?, ?, ?, NOW(), NOW(), ?)");
-            $request->execute([$username, $mail, $hash, true]);
+        }
+
+        // Insertion du nouvel utilisateur
+        $request = $this->db->prepare("INSERT INTO users (username, email, password_hash, created_at, last_online, is_online) VALUES (?, ?, ?, NOW(), NOW(), ?)");
+        $request->execute([$username, $mail, $hash, true]);
     }
 
 public function login_user(){
