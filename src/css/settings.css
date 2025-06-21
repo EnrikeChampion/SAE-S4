@@ -1,0 +1,80 @@
+/* Paramètres utilisateur */
+.settings-container {
+    background-color: white;
+    max-width: 600px;
+    margin: 40px auto;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.15);
+    font-family: Poppins-Regular;
+}
+
+.settings-container h1 {
+    font-family: Poppins-SemiBold;
+    font-size: 26px;
+    color: #075E54;
+    margin-bottom: 25px;
+    text-align: center;
+}
+
+.settings-container img {
+    display: block;
+    margin: 0 auto 20px auto;
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    object-fit: cover;
+    box-shadow: 0 0 6px rgba(0,0,0,0.2);
+}
+
+.settings-container form {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+}
+
+.settings-container label {
+    font-family: Poppins-Medium;
+    color: #333;
+    font-size: 16px;
+}
+
+.settings-container input[type="text"],
+.settings-container input[type="file"] {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    background-color: #f8f9fa;
+    font-family: Poppins-Regular;
+    font-size: 15px;
+}
+
+.settings-container input[type="submit"] {
+    background-color: #128C7E;
+    color: white;
+    border: none;
+    padding: 12px;
+    border-radius: 6px;
+    font-size: 16px;
+    font-family: Poppins-SemiBold;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.settings-container input[type="submit"]:hover {
+    background-color: #075E54;
+}
+
+.settings-container a {
+    display: block;
+    margin-top: 20px;
+    text-align: center;
+    color: #007BFF;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.settings-container a:hover {
+    text-decoration: underline;
+}

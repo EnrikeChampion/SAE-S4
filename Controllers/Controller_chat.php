@@ -35,6 +35,10 @@ class Controller_chat extends Controller {
         // Rediriger vers la page de connexion
         header("Location: ?controller=home");
     }
+    
+    public function action_conditions() {
+        $this->render("conditions", []);
+    }
 
     public function action_profile() {
         $m = Model::getModel();
@@ -48,11 +52,43 @@ class Controller_chat extends Controller {
         }
     }
 
-    public function action_chat() {
-        $this->render("chat", []);
+    public function action_save_settings() {
+    if (!isset($_SESSION['user_id'])) {
+        header('Location: ?controller=home&action=login');
+        exit;
     }
-    public function action_conditions() {
-        $this->render("conditions", []);
+
+    $m = Model::getModel();
+    $user_id = $_SESSION['user_id'];
+
+    // Changer le nom
+    if (!empty($_POST['username'])) {
+        $new_username = trim($_POST['username']);
+        $m->update_username($user_id, $new_username);
+        $_SESSION['username'] = $new_username;
     }
+
+    // Changer l'image
+    if (!empty($_FILES['profile_picture']['name'])) {
+        $file = $_FILES['profile_picture'];
+        $ext = strtolower(pathinfo($file['name'], PATHINFO_EXTENSION));
+        $allowed = ['jpg', 'jpeg', 'png', 'gif'];
+
+        if (in_array($ext, $allowed)) {
+            $filename = uniqid('profile_', true) . '.' . $ext;
+            $upload_path = 'uploads/' . $filename;
+
+            if (move_uploaded_file($file['tmp_name'], $upload_path)) {
+                $m->update_user_picture($user_id, $filename);
+                $_SESSION['profile_picture'] = $filename;
+            }
+        }
+    }
+
+    header('Location: ?controller=chat&action=settings');
+    exit;
+}
+
+
 }
 ?>

@@ -9,7 +9,7 @@
 </head>
 
 <body>
-    <img src="src/images/logo.png" alt="Annotator Quest Logo" class="logo">
+    <img src="src/images/Logoo.png" alt="Annotator Quest Logo" class="logo">
 <div class="container">
     <h1>Bienvenue sur Annotiverse</h1>
     <p>💬 Connectez-vous et commencez à chatter avec style ! Que vous soyez ici pour échanger des idées, partager un secret ou juste dire "Salut !", vous êtes au bon endroit. 🚀</p>

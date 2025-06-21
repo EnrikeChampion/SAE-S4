@@ -137,4 +137,17 @@ public function login_user(){
         }
 
     }
+        public function update_username($user_id, $new_username) {
+    $sql = "UPDATE users SET username = ? WHERE user_id = ?";
+    $stmt = $this->db->prepare($sql);
+    $stmt->execute([$new_username, $user_id]);
+}
+
+        public function update_user_picture($user_id, $filename) {
+    $sql = "UPDATE users SET profile_picture = ? WHERE user_id = ?";
+    $stmt = $this->db->prepare($sql);
+    $stmt->execute([$filename, $user_id]);
+}
+
+        
 }

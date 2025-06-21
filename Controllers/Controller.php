@@ -34,4 +34,11 @@ abstract class Controller {
         }
         exit;
     }
+    public function action_settings() {
+    // Tu peux ici passer les infos de l'utilisateur connecté
+    $m = Model::getModel();
+    $data = $m->get_user_profile($_SESSION['user_id']); // à adapter selon ta méthode modèle
+    $this->render("settings", $data);
+}
+
 }

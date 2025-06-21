@@ -8,13 +8,34 @@
     <title>Page d'accueil - Application d'Annotation</title>
     <link rel="stylesheet" href="src/css/contacts.css">
 </head>
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+    const input = document.querySelector('input[name="recherche"]');
+    const contacts = document.querySelectorAll('.contact-item');
+
+    input.addEventListener("input", function () {
+        const search = input.value.toLowerCase();
+
+        contacts.forEach(function (item) {
+            const name = item.textContent.toLowerCase();
+            if (name.includes(search)) {
+                item.style.display = "";
+            } else {
+                item.style.display = "none";
+            }
+        });
+    });
+});
+</script>
 
 <body>
     <header>
         <h1>Messagerie Instantanée</h1>
         <p>Bienvenue,  <?php echo htmlspecialchars($_SESSION['username']); ?> 😍 !</p>
-        <a href="?controller=chat&action=conditions" id="terms-button">Conditions d'utilisation</a>
-        <a href="?controller=chat&action=logout" id="logout">Déconnexion</a> <!-- Lien pour se déconnecter -->
+        <a href="?controller=chat&action=conditions" id="terms-button">🧾Conditions d'utilisation</a>
+        <a href="?controller=chat&action=settings" class="btn btn-secondary">⚙️Paramètres</a>
+        <a href="?controller=chat&action=logout" id="logout">🔓Déconnexion</a> <!-- Lien pour se déconnecter -->
+        
     </header>
     <main>
         <script src="src\js\contacts.js"></script>
@@ -30,8 +51,11 @@
                     <li class="contact-item">Aucun contact trouvé.</li>
                 <?php endif; ?>
             </ul>
+            <ul class="contact-list" id="contact-list">
+
         </div>
     </main>
+    
 </body>
 
 </html>

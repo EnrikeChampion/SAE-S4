@@ -132,3 +132,12 @@ main {
     font-size: 0.85em;
     color: gray;
 }
+.logoo {
+    width: 100px !important;
+    position: absolute !important;
+    top: 10px;
+    left: 10px;
+    z-index: 100;
+}
+
+
