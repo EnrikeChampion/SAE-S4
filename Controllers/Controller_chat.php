@@ -89,6 +89,9 @@ class Controller_chat extends Controller {
     exit;
 }
 
+    public function action_chat() {
+        $this->render("chat", []);
 
+}
 }
 ?>
