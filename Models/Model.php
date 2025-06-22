@@ -33,19 +33,21 @@ class Model
         $hash = password_hash($password, PASSWORD_BCRYPT); // Utilisation de bcrypt pour le hashage du mot de passe
    
         // Vérification si tous les champs obligatoires sont remplis
-        if (empty($username) ||empty($mail) || empty($password)) {
-            $data = ["message" => "Veuillez remplir tous les champs obligatoires."];
-            return $data;
-        } 
+       if (empty($username) || empty($mail) || empty($password)) {
+        return ["message" => "<script>
+            document.addEventListener('DOMContentLoaded', function() {
+                showError('Veuillez remplir tous les champs obligatoires.');
+            });
+        </script>"];
+    }
+        
         // Vérification de la validité de l'email
         if (!preg_match('/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/', $mail)) {
-            $data = ["message" => "L'adresse e-mail n'est pas valide."];
-            return $data;
+            return $data["message"] = "";
         }
         // Vérification de la longueur du mot de passe et s'il contient au moins une lettre majuscule et un caractère spécial
         if (!preg_match('/^(?=.*[A-Z])(?=.*[\W_]).{8,}$/', $password)) {
-            $data=["message" => "Le mot de passe doit contenir au moins 8 caractères, une majuscule et un caractère spécial."];
-            return $data;
+            return $data["message"] = "";
         }
         else {
             $tmp = $this->db->prepare("SELECT * FROM users WHERE email = ?");
@@ -53,10 +55,13 @@ class Model
             $existing_user = $tmp->fetch();
 
             // Vérifier si un utilisateur avec cet email existe déjà
-            if ($existing_user) {
-                $data = ["message" => "Cet utilisateur existe déjà."];
-                return $data;
-            }
+             if ($existing_user) {
+        return ["message" => "<script>
+            document.addEventListener('DOMContentLoaded', function() {
+                showError('Cet utilisateur est déjà inscrit avec cet email.');
+            });
+        </script>"];
+    }
         }
 
         // Insertion du nouvel utilisateur
@@ -105,6 +110,8 @@ public function login_user(){
         // Préparation de la requête pour mettre à jour le statut de connexion
         $request = $this->db->prepare("UPDATE users SET is_online = FALSE, last_online = NOW() WHERE user_id = ?");
         $request->execute([$user_id]);
+        session_destroy(); // Détruire la session pour éviter les problèmes de session après la déconnexion
+        header("Location: ?controller=home&action=login"); // Rediriger vers la page de connexion
     }
 
 
@@ -165,6 +172,7 @@ public function login_user(){
     $stmt = $this->db->prepare($sql);
     $stmt->execute([$filename, $user_id]);
 }
+
 
     public function sendPasswordResetMail($recipientEmail) {
     $token = bin2hex(random_bytes(50)); // Génération d'un token aléatoire
@@ -259,5 +267,22 @@ public function login_user(){
             $data = ["message" => "Échec de la réinitialisation du mot de passe."];
             return $data;
         }
+    }
+}
+    public function update_user_password($user_id, $new_password) {
+        $hash = password_hash($new_password, PASSWORD_BCRYPT); // Cryptage du mot de passe avec bcrypt
+        $sql = "UPDATE users SET password_hash = ? WHERE user_id = ?";
+        $stmt = $this->db->prepare($sql);
+        $stmt->execute([$hash, $user_id]);
+    }
+
+    public function delete_user($user_id) {
+        // Supprimer l'utilisateur de la base de données
+        $sql = "DELETE FROM users WHERE user_id = ?";
+        $stmt = $this->db->prepare($sql);
+        $stmt->execute([$user_id]);
+
+
+        $this->logout_user($user_id); // Déconnexion de l'utilisateur après la suppression
     }
 }
