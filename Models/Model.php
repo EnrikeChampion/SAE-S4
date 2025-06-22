@@ -268,7 +268,7 @@ public function login_user(){
             return $data;
         }
     }
-}
+
     public function update_user_password($user_id, $new_password) {
         $hash = password_hash($new_password, PASSWORD_BCRYPT); // Cryptage du mot de passe avec bcrypt
         $sql = "UPDATE users SET password_hash = ? WHERE user_id = ?";
