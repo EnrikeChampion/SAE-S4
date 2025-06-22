@@ -8,7 +8,7 @@ body {
 
 #chat-container {
     width: 100%;
-    max-width: 650px;   /* Largeur élargie ici */
+    max-width: 650px;
     margin: 0 auto;
     background: #ffffffcc;
     border-radius: 18px;
@@ -18,7 +18,7 @@ body {
 }
 
 #message-area {
-    height: 380px;  /* Hauteur adaptée pour un conteneur plus large */
+    height: 380px;
     overflow-y: auto;
     border: none;
     background: #f8fafc;
@@ -29,30 +29,45 @@ body {
     transition: box-shadow 0.2s;
 }
 
+.message-row {
+    display: flex;
+    margin-bottom: 10px;
+}
+
+.message-row.mine {
+    justify-content: flex-end;
+}
+
+.message-row.other {
+    justify-content: flex-start;
+}
+
 .message {
-    margin-bottom: 12px;
     padding: 9px 13px;
     border-radius: 12px;
     font-size: 15.5px;
-    display: inline-block;
     max-width: 80%;
     word-break: break-word;
     box-shadow: 0 2px 6px rgba(0,0,0,0.02);
     transition: background 0.2s;
+    display: block;
+    position: relative;
 }
 
 .message.mine {
     background: linear-gradient(90deg, #bae6fd 60%, #f0f9ff 100%);
     text-align: right;
-    margin-left: 20%;
-    align-self: flex-end;
 }
 
 .message.other {
     background: linear-gradient(90deg, #f1f5f9 60%, #fef3c7 100%);
     text-align: left;
-    margin-right: 20%;
-    align-self: flex-start;
+}
+
+.emotion-emoji {
+    font-size: 1.2em;
+    vertical-align: middle;
+    margin-left: 6px;
 }
 
 #input-area {
