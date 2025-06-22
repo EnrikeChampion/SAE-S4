@@ -46,5 +46,47 @@ class Controller_home extends Controller {
             $this->render("login", []);
         }
     }
+
+    public function action_forgot_password() {
+        if (isset($_POST['submit_mail'])) {
+            $m = Model::getModel();
+            $data = $m->sendPasswordResetMail($_POST['mail']);
+            if (isset($data['error'])) {
+                $this->render("register", $data);
+            } else {
+                $this->render("login", $data);
+            }
+        } else {
+            $this->render("forgot_password", []);
+        }
+    }
+
+    public function action_reset() {
+        if (isset($_GET['token'])) {
+            $m = Model::getModel();
+            // Vérification du token de réinitialisation
+            $tok = $m->checkToken($_GET['token']);
+            if (isset($tok['message'])) {
+                $this->render("register", $tok);
+            }
+            
+            if (isset($_POST['submit_reset'])) {
+                $password = $_POST['password'] ?? '';
+                if (empty($password)) {
+                    $this->render("reset_password", ['message' => 'Le mot de passe ne peut pas être vide.']);
+                } else {
+                    $reset = $m->resetPassword($password, $_GET['token']);
+                    if (isset($reset['success'])) {
+                        header('Location: ?controller=home&action=login');
+                    }
+                    $this->render("reset_password", $reset);
+                }
+            }
+
+            $this->render("reset_password", []);
+        }
+
+        $this->render("homepage", []);
+    }
 }
 ?>
