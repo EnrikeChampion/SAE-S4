@@ -1,6 +1,30 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+	<script>
+function showError(message) {
+    const container = document.createElement('div');
+    container.textContent = message;
+    container.style.position = 'fixed';
+    container.style.top = '20px';
+    container.style.left = '50%';
+    container.style.transform = 'translateX(-50%)';
+    container.style.backgroundColor = '#ff4444';
+    container.style.color = 'white';
+    container.style.padding = '12px 24px';
+    container.style.borderRadius = '8px';
+    container.style.fontWeight = 'bold';
+    container.style.boxShadow = '0 4px 8px rgba(0, 0, 0, 0.2)';
+    container.style.zIndex = '9999';
+
+    document.body.appendChild(container);
+
+    setTimeout(() => {
+        container.remove();
+    }, 3500);
+}
+</script>
+
 	<title>Register</title>
 	<style>
         #Exist {
@@ -8,6 +32,32 @@
             opacity: 0;
             font-weight: bold;
             margin-bottom: 20px;
+        }
+        .error-popup {
+            background-color: #ff4d4f;
+            color: white;
+            padding: 12px 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            position: absolute;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-weight: bold;
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            animation: slideDown 0.3s ease-in-out;
+        }
+
+        @keyframes slideDown {
+            from { opacity: 0; transform: translateX(-50%) translateY(-10px); }
+            to { opacity: 1; transform: translateX(-50%) translateY(0); }
+        }
+
+        .hidden {
+            display: none;
         }
     </style>
 	<meta charset="UTF-8">
@@ -37,6 +87,9 @@
 </head>
 <body>
 	<?php echo isset($message) ? $message : ''; ?>
+    <div id="error-popup" class="error-popup hidden">
+        <i class="fa fa-exclamation-circle"></i> <span id="error-message">Erreur ici</span>
+    </div>
 	<div class="limiter">
 		<div class="container-login100" style="background-image: url('src/images/Dark.jpg');">
 			<div class="wrap-login100 p-l-55 p-r-55 p-t-65 p-b-54">
@@ -52,32 +105,25 @@
 						<input class="input100" type="text" name="username" placeholder="Entrez votre nom d'utilisateur">
 						<span class="focus-input100" data-symbol="&#xf206;"></span>
 					</div>
-					<div class="wrap-input100 validate-input m-b-23" data-validate = "Username is required">
+					<div class="wrap-input100 validate-input m-b-23" data-validate = "Nom d'utilisateur requis">
 						<span class="label-input100">Email</span>
-						<input class="input100" type="mail" name="mail" placeholder="Entrez votre login">
+						<input class="input100" type="mail" name="mail" placeholder="Entrez votre nom d'utilisateur">
 						<span class="focus-input100" data-symbol="&#xf206;"></span>
 					</div>
 
-					
-
-					<div class="wrap-input100 validate-input" data-validate="Password is required">
+					<div class="wrap-input100 validate-input" data-validate="Mot de passe requis">
 						<span class="label-input100">Mot de passe</span>
 						<input class="input100" type="password" name="password" placeholder="Entrez votre mot de passe">
 						<span class="focus-input100" data-symbol="&#xf190;"></span>
 					</div>
 
-                    <div class="text-right p-t-8 p-b-31">
-						
-					</div>
+                    <div class="text-right p-t-8 p-b-31"></div>
 					<div class="form-group">
-					<div class="consent">
-   						 <input type="checkbox" id="consent-checkbox" required>
-    						<label for="consent-checkbox">
-       							 J'ai lu et j'accepte les <a href="?controller=chat&action=conditions" target="_blank">conditions d'utilisation</a>.
-
-    
-							</div>
-					
+						<div class="consent">
+    						 <input type="checkbox" id="consent-checkbox" required>
+    							<label for="consent-checkbox">
+        							 J'ai lu et j'accepte les <a href="?controller=chat&action=conditions" target="_blank">conditions d'utilisation</a>.
+						</div>
 					</div>
 					<div class="container-login100-form-btn">
 						<div class="wrap-login100-form-btn">
@@ -117,22 +163,67 @@
 	<script src="vendor/countdowntime/countdowntime.js"></script>
 <!--===============================================================================================-->
 	<script src="js/main.js"></script>
+	
 	<script>
-    const checkbox = document.getElementById('consent-checkbox');
-    const registerBtn = document.getElementById('register-btn');
-    const loginBtn = document.getElementById('login-btn');
+    function showError(message) {
+        const popup = document.getElementById('error-popup');
+        const msg = document.getElementById('error-message');
+        msg.innerText = message;
+        popup.classList.remove('hidden');
 
-    checkbox.addEventListener('change', function () {
-        if (this.checked) {
-            registerBtn.classList.remove('btn-disabled');
-            loginBtn.classList.remove('btn-disabled');
-        } else {
-            registerBtn.classList.add('btn-disabled');
-            loginBtn.classList.add('btn-disabled');
+        setTimeout(() => {
+            popup.classList.add('hidden');
+        }, 4000);
+    }
+
+    document.querySelector('form').addEventListener('submit', function(e) {
+        const email = document.querySelector('input[name="mail"]').value;
+        const password = document.querySelector('input[name="password"]').value;
+
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        const passwordRegex = /^(?=.*[A-Z])(?=.*[\W_]).{8,}$/; 
+
+        if (!emailRegex.test(email)) {
+            e.preventDefault();
+            showError("Email invalide !");
+            return;
+        }
+
+        if (!passwordRegex.test(password)) {
+            e.preventDefault();
+            showError("Le mot de passe doit contenir au moins 8 caractères, une majuscule et un caractère spécial.");
+            return;
         }
     });
-</script>
 	
+</script>
+		<script>
+function showError(message) {
+    const container = document.createElement('div');
+    container.textContent = message;
+    container.style.position = 'fixed';
+    container.style.top = '20px';
+    container.style.left = '50%';
+    container.style.transform = 'translateX(-50%)';
+    container.style.backgroundColor = '#ff4444';
+    container.style.color = 'white';
+    container.style.padding = '12px 24px';
+    container.style.borderRadius = '8px';
+    container.style.fontWeight = 'bold';
+    container.style.boxShadow = '0 4px 8px rgba(0, 0, 0, 0.2)';
+    container.style.zIndex = '9999';
+    container.style.transition = 'opacity 0.5s ease';
+
+    document.body.appendChild(container);
+
+    setTimeout(() => {
+        container.style.opacity = 0;
+        setTimeout(() => container.remove(), 500);
+    }, 3500);
+}
+</script>
 
 </body>
 </html>
+
+

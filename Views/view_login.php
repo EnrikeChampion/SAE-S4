@@ -39,13 +39,13 @@
 						Connexion
 					</span>
 
-					<div class="wrap-input100 validate-input m-b-23" data-validate="Email is required">
+					<div class="wrap-input100 validate-input m-b-23" data-validate="Adresse e-mail requise">
 						<span class="label-input100">Email</span>
 						<input class="input100" type="mail" name="mail" placeholder="Entrez votre adresse e-mail">
 						<span class="focus-input100" data-symbol="&#xf206;"></span>
 					</div>
 
-					<div class="wrap-input100 validate-input" data-validate="Password is required">
+					<div class="wrap-input100 validate-input" data-validate="Mot de passe requis">
 						<span class="label-input100">Mot de passe</span>
 						<input class="input100" type="password" name="password" placeholder="Entrez votre mot de passe">
 						<span class="focus-input100" data-symbol="&#xf190;"></span>
