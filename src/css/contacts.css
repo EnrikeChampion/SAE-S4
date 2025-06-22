@@ -132,12 +132,14 @@ main {
     font-size: 0.85em;
     color: gray;
 }
-.logoo {
-    width: 100px !important;
-    position: absolute !important;
+.logo {
+   position: absolute;
     top: 10px;
     left: 10px;
-    z-index: 100;
+    width: 200px;   /* ou 100px selon la taille souhaitée */
+    height: auto;
+    z-index: 10;
+    
 }
 
 

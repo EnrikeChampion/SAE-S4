@@ -29,6 +29,7 @@ document.addEventListener("DOMContentLoaded", function () {
 </script>
 
 <body>
+    <img src="src/images/Logoo.png" alt="Annotator Quest Logo" class="logo">
     <header>
         <h1>Messagerie Instantanée</h1>
         <p>Bienvenue,  <?php echo htmlspecialchars($_SESSION['username']); ?> 😍 !</p>
