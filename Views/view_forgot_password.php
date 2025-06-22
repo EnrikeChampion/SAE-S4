@@ -36,7 +36,7 @@
 			<div class="wrap-login100 p-l-55 p-r-55 p-t-65 p-b-54">
 				<form class="login100-form validate-form" method="POST">
 					<span class="login100-form-title p-b-49">
-						Connexion
+						Mot de passe oublié
 					</span>
 
 					<div class="wrap-input100 validate-input m-b-23" data-validate="Email is required">
@@ -45,37 +45,13 @@
 						<span class="focus-input100" data-symbol="&#xf206;"></span>
 					</div>
 
-					<div class="wrap-input100 validate-input" data-validate="Password is required">
-						<span class="label-input100">Mot de passe</span>
-						<input class="input100" type="password" name="password" placeholder="Entrez votre mot de passe">
-						<span class="focus-input100" data-symbol="&#xf190;"></span>
-					</div>
-
-					<div class="text-right p-t-8 p-b-31">
-						<a href="?Controller=home&action=forgot_password">
-							Mot de passe oublié?
-						</a>
-					</div>
-					<div class="form-group">
-						<label>
-							<input type="checkbox" name="accept_conditions" required>
-							J'accepte les <a href="?controller=chat&action=conditions" target="_blank">conditions d'utilisation</a>
-						</label>
-					
-
 					<div class="container-login100-form-btn">
 						<div class="wrap-login100-form-btn">
 							<div class="login100-form-bgbtn"></div>
-							<button class="login100-form-btn" name="submit_login">
-								Connexion
+							<button class="login100-form-btn" name="submit_mail">
+								Envoyer le lien de réinitialisation
 							</button>
 						</div>
-					</div>
-					</div>
-					<div class="txt1 text-center p-t-54 p-b-20">
-						<span color="black">
-							Vous n'avez pas encore de compte ? <a href="?controller=home&action=register">Inscrivez-vous ici pour commencer ! </a>
-						</span>
 					</div>
 				</form>
 			</div>

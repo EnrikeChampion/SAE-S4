@@ -9,7 +9,9 @@ CREATE TABLE users (
     email VARCHAR(100) NOT NULL,
     created_at TIMESTAMP,
     last_online TIMESTAMP,
-    is_online BOOLEAN
+    is_online BOOLEAN,
+    reset_token VARCHAR(255) DEFAULT NULL,
+    reset_token_expiry TIMESTAMP DEFAULT NOW()
 );
 
 CREATE TABLE messages (
