@@ -38,11 +38,11 @@ class Model
         
         // Vérification de la validité de l'email
         if (!preg_match('/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/', $mail)) {
-            return $data;
+            return $data["message"] = "";
         }
         // Vérification de la longueur du mot de passe et s'il contient au moins une lettre majuscule et un caractère spécial
         if (!preg_match('/^(?=.*[A-Z])(?=.*[\W_]).{8,}$/', $password)) {
-            return $data;
+            return $data["message"] = "";
         }
         else {
             $tmp = $this->db->prepare("SELECT * FROM users WHERE email = ?");
@@ -105,6 +105,8 @@ public function login_user(){
         // Préparation de la requête pour mettre à jour le statut de connexion
         $request = $this->db->prepare("UPDATE users SET is_online = FALSE, last_online = NOW() WHERE user_id = ?");
         $request->execute([$user_id]);
+        session_destroy(); // Détruire la session pour éviter les problèmes de session après la déconnexion
+        header("Location: ?controller=home&action=login"); // Rediriger vers la page de connexion
     }
 
 
@@ -166,5 +168,20 @@ public function login_user(){
     $stmt->execute([$filename, $user_id]);
 }
 
-        
+    public function update_user_password($user_id, $new_password) {
+        $hash = password_hash($new_password, PASSWORD_BCRYPT); // Cryptage du mot de passe avec bcrypt
+        $sql = "UPDATE users SET password_hash = ? WHERE user_id = ?";
+        $stmt = $this->db->prepare($sql);
+        $stmt->execute([$hash, $user_id]);
+    }
+
+    public function delete_user($user_id) {
+        // Supprimer l'utilisateur de la base de données
+        $sql = "DELETE FROM users WHERE user_id = ?";
+        $stmt = $this->db->prepare($sql);
+        $stmt->execute([$user_id]);
+
+
+        $this->logout_user($user_id); // Déconnexion de l'utilisateur après la suppression
+    }
 }

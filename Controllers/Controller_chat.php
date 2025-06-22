@@ -52,7 +52,7 @@ class Controller_chat extends Controller {
         }
     }
 
-    public function action_save_settings() {
+public function action_save_settings() {
     if (!isset($_SESSION['user_id'])) {
         header('Location: ?controller=home&action=login');
         exit;
@@ -61,6 +61,13 @@ class Controller_chat extends Controller {
     $m = Model::getModel();
     $user_id = $_SESSION['user_id'];
 
+    // Suppression du compte
+    if (isset($_POST['delete-account'])) {
+        $m->delete_user($user_id);
+        // Les lignes suivantes ne seront pas exécutées car delete_user fait déjà un session_destroy() et une redirection
+        exit;
+    }
+
     // Changer le nom
     if (!empty($_POST['username'])) {
         $new_username = trim($_POST['username']);
@@ -68,20 +75,15 @@ class Controller_chat extends Controller {
         $_SESSION['username'] = $new_username;
     }
 
-    // Changer l'image
-    if (!empty($_FILES['profile_picture']['name'])) {
-        $file = $_FILES['profile_picture'];
-        $ext = strtolower(pathinfo($file['name'], PATHINFO_EXTENSION));
-        $allowed = ['jpg', 'jpeg', 'png', 'gif'];
-
-        if (in_array($ext, $allowed)) {
-            $filename = uniqid('profile_', true) . '.' . $ext;
-            $upload_path = 'uploads/' . $filename;
-
-            if (move_uploaded_file($file['tmp_name'], $upload_path)) {
-                $m->update_user_picture($user_id, $filename);
-                $_SESSION['profile_picture'] = $filename;
-            }
+    // Changer le mot de passe
+    if (!empty($_POST['password'])) {
+        $new_password = $_POST['password'];
+        $password_confirm = $_POST['password-confirm'] ?? '';
+        if (
+            preg_match('/^(?=.*[A-Z])(?=.*[\W_]).{8,}$/', $new_password) &&
+            $new_password === $password_confirm
+        ) {
+            $m->update_user_password($user_id, $new_password);
         }
     }
 
