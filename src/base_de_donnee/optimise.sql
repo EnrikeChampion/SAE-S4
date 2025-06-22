@@ -33,10 +33,10 @@ CREATE TABLE annotations (
 );
 
 INSERT INTO users (username, password_hash, email, created_at, last_online, is_online)
-VALUES ('Ruben Dubord', '$2y$10$zlCuQPLzPQNtvuL1oQyKtOXyNO2nQbrVVhl6s52oAA6Yw7Lp2sVZC', 'vousaurezpasmonmail@gmail.com', NOW(), NOW(), TRUE),
-('Enrike Champion', '$2y$10$zlCuQPLzPQNtvuL1oQyKtOXyNO2nQbrVVhl6s52oAA6Yw7Lp2sVZC', 'lemaildeenrike@gmail.com', NOW(), NOW(), TRUE),
-('Ivan Veljovic Bulatovic', '$2y$10$zlCuQPLzPQNtvuL1oQyKtOXyNO2nQbrVVhl6s52oAA6Yw7Lp2sVZC', 'unmailbcptroplong@gmail.com', NOW(), NOW(), TRUE),
-('Ryan Agin', '$2y$10$zlCuQPLzPQNtvuL1oQyKtOXyNO2nQbrVVhl6s52oAA6Yw7Lp2sVZC', 'legoat@gmail.com', NOW(), NOW(), TRUE),
-('Yanis Naït-Makhlouf', '$2y$10$zlCuQPLzPQNtvuL1oQyKtOXyNO2nQbrVVhl6s52oAA6Yw7Lp2sVZC', 'pistachegrill@gmail.com', NOW(), NOW(), TRUE),
-('Syphax Benchalal', '$2y$10$zlCuQPLzPQNtvuL1oQyKtOXyNO2nQbrVVhl6s52oAA6Yw7Lp2sVZC', 'lesyphax@gmail.com', NOW(), NOW(), FALSE)
+VALUES ('Ruben Dubord', '$2y$10$eYG2LINe6j4ckZk0pCae3OPXBPODOYsbeCPes94/G7bwi.oYQLGWm', 'vousaurezpasmonmail@gmail.com', NOW(), NOW(), TRUE),
+('Enrike Champion', '$2y$10$eYG2LINe6j4ckZk0pCae3OPXBPODOYsbeCPes94/G7bwi.oYQLGWm', 'lemaildeenrike@gmail.com', NOW(), NOW(), TRUE),
+('Ivan Veljovic Bulatovic', '$2y$10$eYG2LINe6j4ckZk0pCae3OPXBPODOYsbeCPes94/G7bwi.oYQLGWm', 'unmailbcptroplong@gmail.com', NOW(), NOW(), TRUE),
+('Ryan Agin', '$2y$10$eYG2LINe6j4ckZk0pCae3OPXBPODOYsbeCPes94/G7bwi.oYQLGWm', 'legoat@gmail.com', NOW(), NOW(), TRUE),
+('Yanis Naït-Makhlouf', '$2y$10$eYG2LINe6j4ckZk0pCae3OPXBPODOYsbeCPes94/G7bwi.oYQLGWm', 'pistachegrill@gmail.com', NOW(), NOW(), TRUE),
+('Syphax Benchalal', '$2y$10$eYG2LINe6j4ckZk0pCae3OPXBPODOYsbeCPes94/G7bwi.oYQLGWm', 'lesyphax@gmail.com', NOW(), NOW(), FALSE)
 ;
