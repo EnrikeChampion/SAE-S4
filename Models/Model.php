@@ -28,18 +28,20 @@ class Model
         $hash = password_hash($password, PASSWORD_BCRYPT); // Utilisation de bcrypt pour le hashage du mot de passe
    
         // Vérification si tous les champs obligatoires sont remplis
-        if (empty($username) ||empty($mail) || empty($password)) {
-            $data = ["message" => "Veuillez remplir tous les champs obligatoires."];
-            return $data;
-        } 
+       if (empty($username) || empty($mail) || empty($password)) {
+        return ["message" => "<script>
+            document.addEventListener('DOMContentLoaded', function() {
+                showError('Veuillez remplir tous les champs obligatoires.');
+            });
+        </script>"];
+    }
+        
         // Vérification de la validité de l'email
         if (!preg_match('/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/', $mail)) {
-            $data = ["message" => "L'adresse e-mail n'est pas valide."];
             return $data;
         }
         // Vérification de la longueur du mot de passe et s'il contient au moins une lettre majuscule et un caractère spécial
         if (!preg_match('/^(?=.*[A-Z])(?=.*[\W_]).{8,}$/', $password)) {
-            $data=["message" => "Le mot de passe doit contenir au moins 8 caractères, une majuscule et un caractère spécial."];
             return $data;
         }
         else {
@@ -48,10 +50,13 @@ class Model
             $existing_user = $tmp->fetch();
 
             // Vérifier si un utilisateur avec cet email existe déjà
-            if ($existing_user) {
-                $data = ["message" => "Cet utilisateur existe déjà."];
-                return $data;
-            }
+             if ($existing_user) {
+        return ["message" => "<script>
+            document.addEventListener('DOMContentLoaded', function() {
+                showError('Cet utilisateur est déjà inscrit avec cet email.');
+            });
+        </script>"];
+    }
         }
 
         // Insertion du nouvel utilisateur
