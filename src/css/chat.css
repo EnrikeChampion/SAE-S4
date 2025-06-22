@@ -70,6 +70,22 @@ body {
     margin-left: 6px;
 }
 
+/* Bouton suppression */
+.delete-message-btn {
+    background: none;
+    border: none;
+    color: #f87171;
+    font-size: 18px;
+    cursor: pointer;
+    vertical-align: middle;
+    border-radius: 5px;
+    margin-left: 8px;
+    transition: background 0.13s;
+}
+.delete-message-btn:hover {
+    background: #fee2e2;
+}
+
 #input-area {
     display: flex;
     flex-direction: column;
