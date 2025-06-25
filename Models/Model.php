@@ -1,5 +1,10 @@
 <?php
 
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\Exception;
+
+require 'vendor/autoload.php';
+
 class Model
 {
     private $db;
@@ -38,11 +43,11 @@ class Model
         
         // Vérification de la validité de l'email
         if (!preg_match('/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/', $mail)) {
-            return $data;
+            return $data["message"] = "";
         }
         // Vérification de la longueur du mot de passe et s'il contient au moins une lettre majuscule et un caractère spécial
         if (!preg_match('/^(?=.*[A-Z])(?=.*[\W_]).{8,}$/', $password)) {
-            return $data;
+            return $data["message"] = "";
         }
         else {
             $tmp = $this->db->prepare("SELECT * FROM users WHERE email = ?");
@@ -105,6 +110,8 @@ public function login_user(){
         // Préparation de la requête pour mettre à jour le statut de connexion
         $request = $this->db->prepare("UPDATE users SET is_online = FALSE, last_online = NOW() WHERE user_id = ?");
         $request->execute([$user_id]);
+        session_destroy(); // Détruire la session pour éviter les problèmes de session après la déconnexion
+        header("Location: ?controller=home&action=login"); // Rediriger vers la page de connexion
     }
 
 
@@ -166,5 +173,116 @@ public function login_user(){
     $stmt->execute([$filename, $user_id]);
 }
 
+
+    public function sendPasswordResetMail($recipientEmail) {
+    $token = bin2hex(random_bytes(50)); // Génération d'un token aléatoire
+
+    // Enregistrement du token dans la base de données
+    $stmt = $this->db->prepare("UPDATE users SET reset_token = ?, reset_token_expiry = NOW() + INTERVAL 1 HOUR WHERE email = ?");
+    $stmt->execute([$token, $recipientEmail]);
+    $resetLink = "http://localhost/sae/?Controller=home&action=reset&token=" . urlencode($token);
+    
+    
+    $mail = new PHPMailer(true);
+
+    $sql = "SELECT email FROM users WHERE email = ?";
+    $stmt = $this->db->prepare($sql);
+    $stmt->execute([$recipientEmail]);
+
+    $user = $stmt->fetch(PDO::FETCH_ASSOC);
+
+    if (isset($user['email'])) {
+        // Configuration SMTP Gmail
+        $mail->isSMTP();
+        $mail->Host       = 'smtp.gmail.com';
+        $mail->SMTPAuth   = true;
+        $mail->Username   = 'assistance2annotiverse@gmail.com';
+        $mail->Password   = 'ifbo qcud inof mdju';
+        $mail->SMTPSecure = 'tls';
+        $mail->Port       = 587;
+
+        // Expéditeur / destinataire
+        $mail->setFrom('assistance2annotiverse@gmail.com', 'Support Annotiverse');
+        $mail->addAddress($user['email']);
+
+        // Contenu du mail
+        $mail->isHTML(true);
+        $mail->Subject = 'Réinitialisation de votre mot de passe';
+        $mail->Body    = "
+            <h3>Réinitialisation de mot de passe</h3>
+            <p>Bonjour,</p>
+            <p>Pour réinitialiser votre mot de passe, cliquez sur le lien ci-dessous :</p>
+            <p><a href='$resetLink'>$resetLink</a></p>
+            <p>Si vous n'avez pas demandé de réinitialisation, ignorez simplement ce message.</p>
+        ";
+        $mail->AltBody = "Pour réinitialiser votre mot de passe, copiez ce lien dans votre navigateur : $resetLink";
+
+        $mail->send();
         
+        $data = ["message" => "Email de réinitialisation envoyé avec succès."];
+        return $data;
+    } else {
+        $data = ["message" => "Aucun utilisateur trouvé avec cet email.", "error" => true];
+        return $data;
+    }
+}        
+
+    public function checkToken($token) {
+        $stmt = $this->db->prepare("SELECT * FROM users WHERE reset_token = ? AND reset_token_expiry > NOW()");
+        $stmt->execute([$token]);
+        $row = $stmt->fetch(PDO::FETCH_ASSOC);
+
+        if ($row) {
+            $data = [
+                'user_id' => $row['user_id']
+            ];
+            return $data; 
+        } else {
+            $data = [
+                'message' => 'Le lien de réinitialisation est invalide ou a expiré.'
+            ];
+            return $data;
+        }
+    }
+
+    public function resetPassword($new_password, $token) {
+        
+        // Vérification de la longueur du mot de passe et s'il contient au moins une lettre majuscule et un caractère spécial
+        if (!preg_match('/^(?=.*[A-Z])(?=.*[\W_]).{8,}$/', $new_password)) {
+            $data = ["message" => "Le mot de passe doit contenir au moins 8 caractères, une majuscule et un caractère spécial."];
+            return $data;
+        }
+
+        $hash = password_hash($new_password, PASSWORD_BCRYPT); // Utilisation de bcrypt pour le hashage du mot de passe
+
+         // Mise à jour du mot de passe dans la base de données
+        $stmt = $this->db->prepare("UPDATE users SET password_hash = ?, reset_token = NULL, reset_token_expiry = NULL WHERE reset_token = ?");
+        $stmt->execute([$hash, $token]);
+
+        // Vérification si la mise à jour a réussi
+        if ($stmt->rowCount() > 0) {
+            $data = ["message" => "Mot de passe réinitialisé avec succès.", "success" => true];
+            return $data;
+        } else {
+            $data = ["message" => "Échec de la réinitialisation du mot de passe."];
+            return $data;
+        }
+    }
+
+    public function update_user_password($user_id, $new_password) {
+        $hash = password_hash($new_password, PASSWORD_BCRYPT); // Cryptage du mot de passe avec bcrypt
+        $sql = "UPDATE users SET password_hash = ? WHERE user_id = ?";
+        $stmt = $this->db->prepare($sql);
+        $stmt->execute([$hash, $user_id]);
+    }
+
+    public function delete_user($user_id) {
+        // Supprimer l'utilisateur de la base de données
+        $sql = "DELETE FROM users WHERE user_id = ?";
+        $stmt = $this->db->prepare($sql);
+        $stmt->execute([$user_id]);
+
+
+        $this->logout_user($user_id); // Déconnexion de l'utilisateur après la suppression
+    }
 }

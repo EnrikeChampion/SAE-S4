@@ -72,7 +72,7 @@
             <h2>5. Contact</h2>
             <p>
                 Pour toute question relative à vos données personnelles, à la collecte des messages et annotations ou à l’exercice de vos droits, vous pouvez 
-                nous contacter en envoyant un email à l’adresse suivante : <a href="mailto:assistanceannotatorquest@gmail.com">assistanceannotatorquest@gmail.com</a>.
+                nous contacter en envoyant un email à l’adresse suivante : <a href="mailto:assistance2annotiverse@gmail.com">assistance2annotiverse@gmail.com</a>.
             </p>
         </section>
 
