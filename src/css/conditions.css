@@ -1,0 +1,110 @@
+* {
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', Arial, sans-serif;
+    background: url('../images/Dark.jpg') no-repeat center center fixed;
+    background-size: cover;
+    color: #23263b;
+    margin: 0;
+    padding: 0;
+    min-height: 100vh;
+}
+
+.container {
+    max-width: 840px;
+    margin: 40px auto;
+    background: #fff;
+    padding: 40px 30px 32px 30px;
+    border-radius: 20px;
+    box-shadow: 0 8px 32px rgba(44, 62, 80, 0.12), 0 1.5px 4px rgba(0,0,0,0.03);
+    transition: box-shadow 0.2s;
+}
+
+.container:hover {
+    box-shadow: 0 16px 48px rgba(44, 62, 80, 0.16), 0 1.5px 6px rgba(0,0,0,0.06);
+}
+
+h1 {
+    color: #2152fa;
+    font-size: 2.6rem;
+    margin-bottom: 18px;
+    letter-spacing: -1px;
+}
+
+h2 {
+    color: #27408b;
+    font-size: 1.35rem;
+    margin-top: 32px;
+    margin-bottom: 10px;
+    font-weight: 600;
+}
+
+p, li {
+    line-height: 1.7;
+    font-size: 1.07rem;
+}
+
+ul {
+    margin-left: 30px;
+    margin-top: 8px;
+    margin-bottom: 16px;
+}
+
+section {
+    margin-bottom: 8px;
+}
+
+.confirmation {
+    margin-top: 28px;
+    font-weight: 500;
+    background: #f3f6fd;
+    padding: 16px 24px;
+    border-radius: 8px;
+    border-left: 5px solid #2152fa;
+}
+
+a {
+    color: #2152fa;
+    text-decoration: underline;
+    transition: color 0.15s;
+}
+
+a:hover {
+    color: #16337b;
+}
+
+a.back-btn {
+    display: inline-block;
+    margin-top: 34px;
+    text-decoration: none;
+    color: #fff;
+    background: linear-gradient(90deg, #2152fa 60%, #4274e7 100%);
+    padding: 13px 28px;
+    border-radius: 7px;
+    font-size: 1rem;
+    font-weight: 600;
+    box-shadow: 0 2px 8px rgba(33,82,250,0.10);
+    transition: background 0.17s, transform 0.13s;
+}
+
+a.back-btn:hover {
+    background: linear-gradient(90deg, #16337b 70%, #2152fa 100%);
+    transform: translateY(-1px) scale(1.03);
+}
+
+@media (max-width: 600px) {
+    .container {
+        padding: 18px 5vw 18px 5vw;
+        border-radius: 0;
+        margin: 0;
+        box-shadow: none;
+    }
+    h1 {
+        font-size: 2rem;
+    }
+    h2 {
+        font-size: 1.1rem;
+    }
+}
